@@ -38,12 +38,11 @@ class ImageBrowser:
 
         return self.images.index(img_path)
 
-    def change_image(self, location: str):
+    def change_image(self, location: str = ""):
         if location == "":
             self.current_image.load_image(self.images[0])
-            return
-
-        self.current_image.load_image(location)
+        else:
+            self.current_image.load_image(location)
 
         if self.widget:
             self.widget.set_image(self.current_image)

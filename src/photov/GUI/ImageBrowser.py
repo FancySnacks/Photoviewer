@@ -30,7 +30,12 @@ class ImageBrowserGUI:
                                  command=self.parent.next_image)
         self.NEXTBUTTON.pack(pady=15, side="left")
 
+        self.ROOT.after(100, self.load_default_image)
+
     def set_image(self, *args):
         img = args[0]
         self.LABEL.configure(image=img.get_image)
         self.ROOT.title(f"{img.location} - PhotoViewer")
+
+    def load_default_image(self):
+        self.parent.change_image()
