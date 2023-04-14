@@ -51,3 +51,11 @@ def test_get_previous_image_when_at_beginning(mock_browser):
     target_image = mock_browser.images[-1]
     prev_image = mock_browser.prev_image()
     assert prev_image == target_image
+
+
+def test_get_next_image_when_next_image_is_deleted(mock_browser, mock_directory):
+    target = mock_directory[2]
+    mock_browser.current_image = mock_browser.images[0]
+    mock_browser.dir.pop(1)
+    next_img = mock_browser.next_image()
+    assert next_img == target
