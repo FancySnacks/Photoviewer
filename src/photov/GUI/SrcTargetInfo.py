@@ -36,7 +36,3 @@ class SrcTargetInfo:
         self.SRC_ENTRY.delete(0, END)
         self.SRC_ENTRY.insert(0, path)
         self.SRC_ENTRY.xview_moveto(len(self.SRC_ENTRY.get()))
-
-    def set_target_dir(self, path: str):
-        self.TARGET_ENTRY.delete(0, END)
-        self.TARGET_ENTRY.insert(0, path)
