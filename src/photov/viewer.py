@@ -47,15 +47,15 @@ class ImageBrowser:
         if self.widget:
             self.widget.set_image(self.current_image)
 
-    def prev_image(self):
+    def prev_image(self, *args):
         current_index = self.get_image_index(self.current_image.location)
-        next_index = self.get_image_at(current_index - 1)
-        self.change_image(next_index)
+        prev_img = self.get_image_at(current_index - 1)
+        self.change_image(prev_img)
 
-    def next_image(self):
+    def next_image(self, *args):
         current_index = self.get_image_index(self.current_image.location)
-        next_index = self.get_image_at(current_index + 1)
-        self.change_image(next_index)
+        next_img = self.get_image_at(current_index + 1)
+        self.change_image(next_img)
 
 
 class MainImage:

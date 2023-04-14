@@ -1,7 +1,7 @@
-import pytest
 import subprocess
 
 from photov.const import PATH
+
 
 def run_module(args: list[str] = None):
     path = f'python {PATH}'

@@ -1,4 +1,3 @@
-import sys
 from typing import Sequence, Optional
 
 from photov.arg_parser import ArgParser

@@ -1,7 +1,6 @@
 import pytest
 
 from photov.arg_parser import ArgParser
-from .mock_imagebrowser import MockImageBrowser
 
 
 @pytest.fixture
@@ -23,4 +22,4 @@ def test_parse_working_directory():
 
 def test_raises_exception_when_invalid_args():
     with pytest.raises(BaseException):
-        parser = ArgParser(["-n0"])
+        ArgParser(["-n0"])

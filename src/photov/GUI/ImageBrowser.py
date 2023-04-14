@@ -30,6 +30,8 @@ class ImageBrowserGUI:
                                  command=self.parent.next_image)
         self.NEXTBUTTON.pack(pady=15, side="left")
 
+        self.bind_key_shortcuts()
+
         self.ROOT.after(100, self.load_default_image)
 
     def set_image(self, *args):
@@ -39,3 +41,7 @@ class ImageBrowserGUI:
 
     def load_default_image(self):
         self.parent.change_image()
+
+    def bind_key_shortcuts(self):
+        self.ROOT.bind('<Left>', self.parent.prev_image)
+        self.ROOT.bind('<Right>', self.parent.next_image)
