@@ -1,6 +1,7 @@
 from PIL import Image, ImageTk
 
 import os
+import pathlib
 
 from photov.GUI.ImageBrowser import ImageBrowserGUI
 from photov.util import is_image_file
@@ -64,10 +65,14 @@ class MainImage:
         self._image = None
 
     @property
-    def get_image(self):
+    def get_image(self) -> ImageTk:
         self.img = ImageTk.PhotoImage(self._image)
         return self.img
 
     def load_image(self, location: str):
         self._image = Image.open(location)
         self.location = location
+
+    def get_full_path(self) -> str:
+        path = pathlib.Path(self.location)
+        return str(path.absolute())

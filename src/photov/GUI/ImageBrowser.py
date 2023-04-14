@@ -3,6 +3,8 @@ from typing import TYPE_CHECKING
 
 from tkinter import *
 
+from photov.GUI.SrcTargetInfo import SrcTargetInfo
+
 if TYPE_CHECKING:
     from photov.viewer import ImageBrowser
 
@@ -15,20 +17,31 @@ class ImageBrowserGUI:
         self.ROOT.title("Photo Viewer")
         self.ROOT.geometry("500x400")
 
-        self.LABEL = Label(self.ROOT)
+        self.FRAME = Frame(self.ROOT)
+        self.FRAME.pack(expand=True, fill="both")
+
+        self.SrcTarget = SrcTargetInfo(root=self.ROOT, parent_widget=self.FRAME, parent=self)
+
+        self.LABEL = Label(self.FRAME)
         self.LABEL.pack(expand=True)
 
-        self.PREVBUTTON = Button(self.ROOT,
+        self.BUTTONFRAME = Frame(self.FRAME)
+        self.BUTTONFRAME.pack()
+
+        self.PREVBUTTON = Button(self.BUTTONFRAME,
                                  text="< Prev",
                                  font=('Helvetica', 13, 'bold'),
                                  command=self.parent.next_image)
         self.PREVBUTTON.pack(pady=15, side="left")
 
-        self.NEXTBUTTON = Button(self.ROOT,
+        self.SEPARATOR = Frame(self.BUTTONFRAME)
+        self.SEPARATOR.pack(expand=True, padx=50)
+
+        self.NEXTBUTTON = Button(self.BUTTONFRAME,
                                  text="Next >",
                                  font=('Helvetica', 13, 'bold'),
                                  command=self.parent.next_image)
-        self.NEXTBUTTON.pack(pady=15, side="left")
+        self.NEXTBUTTON.pack(pady=15, side="right")
 
         self.bind_key_shortcuts()
 
@@ -38,6 +51,11 @@ class ImageBrowserGUI:
         img = args[0]
         self.LABEL.configure(image=img.get_image)
         self.ROOT.title(f"{img.location} - PhotoViewer")
+        self.set_img_path_info()
+
+    def set_img_path_info(self):
+        path = self.parent.current_image.get_full_path()
+        self.SrcTarget.set_source_dir(path)
 
     def load_default_image(self):
         self.parent.change_image()
