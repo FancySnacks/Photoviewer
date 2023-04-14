@@ -29,6 +29,7 @@ class ImageBrowser:
         return image_files
 
     def get_image_at(self, index: int) -> str:
+        print(index)
         try:
             return self.images[index]
         except IndexError:
@@ -61,12 +62,12 @@ class ImageBrowser:
 
     def full_path(self, img_path: str) -> str:
         path = pathlib.Path(self.current_dir).joinpath(img_path)
-        return path
+        return str(path)
 
 
 class MainImage:
     def __init__(self, location: str = ""):
-        self.location: str = location
+        self._location: str = location
         self._image = None
 
     @property
@@ -74,9 +75,14 @@ class MainImage:
         self.img = ImageTk.PhotoImage(self._image)
         return self.img
 
+    @property
+    def location(self) -> str:
+        path = pathlib.Path(self._location).parts[-1]
+        return path
+
     def load_image(self, location: str):
         self._image = Image.open(location)
-        self.location = location
+        self._location = location
 
     def get_full_path(self) -> str:
         path = pathlib.Path(self.location)

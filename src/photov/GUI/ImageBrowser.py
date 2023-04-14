@@ -56,7 +56,7 @@ class ImageBrowserGUI:
     def set_img_path_info(self, path: str):
         self.SrcTarget.set_source_dir(path)
 
-    def load_default_image(self):
+    def load_default_image(self, *args):
         self.parent.change_image()
 
     def bind_key_shortcuts(self):
