@@ -15,6 +15,7 @@ class ImageBrowser:
 
         if show_widget is True:
             self.widget = ImageBrowserGUI(self)
+            self.widget.set_img_path_info(self.current_dir)
             self.widget.ROOT.mainloop()
 
     @property
@@ -40,10 +41,10 @@ class ImageBrowser:
         return self.images.index(img_path)
 
     def change_image(self, location: str = ""):
-        if location == "":
-            self.current_image.load_image(self.images[0])
+        if location == "" or location == ".":
+            self.current_image.load_image(self.full_path(self.images[0]))
         else:
-            self.current_image.load_image(location)
+            self.current_image.load_image(self.full_path(location))
 
         if self.widget:
             self.widget.set_image(self.current_image)
@@ -57,6 +58,10 @@ class ImageBrowser:
         current_index = self.get_image_index(self.current_image.location)
         next_img = self.get_image_at(current_index + 1)
         self.change_image(next_img)
+
+    def full_path(self, img_path: str) -> str:
+        path = pathlib.Path(self.current_dir).joinpath(img_path)
+        return path
 
 
 class MainImage:

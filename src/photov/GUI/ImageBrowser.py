@@ -51,10 +51,9 @@ class ImageBrowserGUI:
         img = args[0]
         self.LABEL.configure(image=img.get_image)
         self.ROOT.title(f"{img.location} - PhotoViewer")
-        self.set_img_path_info()
+        self.set_img_path_info(img.get_full_path())
 
-    def set_img_path_info(self):
-        path = self.parent.current_image.get_full_path()
+    def set_img_path_info(self, path: str):
         self.SrcTarget.set_source_dir(path)
 
     def load_default_image(self):
