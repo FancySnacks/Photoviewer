@@ -8,8 +8,8 @@ from photov.util import is_image_file
 
 
 class ImageBrowser:
-    def __init__(self, show_widget = False, path: str = "."):
-        self.current_dir = path
+    def __init__(self, show_widget = False, path: str = None):
+        self.current_dir = path or pathlib.Path().cwd()
         self._images: list[str] = self.get_images_in_dir()
         self.current_image: MainImage = MainImage()
 
@@ -85,5 +85,4 @@ class MainImage:
         self._location = location
 
     def get_full_path(self) -> str:
-        path = pathlib.Path(self.location)
-        return str(path.absolute())
+        return self._location

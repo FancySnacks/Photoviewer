@@ -14,7 +14,7 @@ class ArgParser(ArgumentParser):
         self.add_argument("-p",
                           "--path",
                           type=str,
-                          default=".",
+                          default=None,
                           help="Specify source directory to operate on")
 
         self.add_argument("-g",
