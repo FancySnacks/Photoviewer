@@ -41,7 +41,10 @@ class SrcTargetInfo:
         self.SRC_ENTRY.xview_moveto(len(self.SRC_ENTRY.get()))
 
     def change_source(self):
+        path = pathlib.Path(self.source_path.get()).parent
+        if path == self.parent.parent.current_dir:
+            return
+
         input_path = self.source_path.get().replace('"', '')
         self.parent.parent.current_dir = input_path
-        print(input_path)
         self.parent.load_default_image()
