@@ -14,6 +14,7 @@ def is_image_file(path: str) -> bool:
 
 def bytes_to_nearest_unit(bytes: int) -> (int, str):
     import math
+
     units = ["B", "KB", "MB", "GB", "TB"]
     div = int(math.floor(math.log(bytes, 1024)))
     p = math.pow(1024, div)

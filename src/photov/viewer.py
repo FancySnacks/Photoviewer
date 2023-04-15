@@ -9,7 +9,7 @@ from photov.util import is_image_file
 
 
 class ImageBrowser:
-    def __init__(self, show_widget = False, path: str = None):
+    def __init__(self, show_widget=False, path: str = None):
         self.current_dir = path or pathlib.Path().cwd()
         self._images: list[str] = self.get_images_in_dir()
         self.current_image: MainImage = MainImage()
@@ -47,7 +47,7 @@ class ImageBrowser:
             self.current_image.load_image(self.full_path(self.images[0]), 1)
         else:
             img_index: int = self.images.index(location)
-            self.current_image.load_image(self.full_path(location), img_index+1)
+            self.current_image.load_image(self.full_path(location), img_index + 1)
 
         if self.widget:
             self.widget.set_image(self.current_image)

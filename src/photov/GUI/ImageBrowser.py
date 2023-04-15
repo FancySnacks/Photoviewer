@@ -21,7 +21,9 @@ class ImageBrowserGUI:
         self.FRAME = Frame(self.ROOT)
         self.FRAME.pack(expand=True, fill="both")
 
-        self.SrcTarget = SrcTargetInfo(root=self.ROOT, parent_widget=self.FRAME, parent=self)
+        self.SrcTarget = SrcTargetInfo(
+            root=self.ROOT, parent_widget=self.FRAME, parent=self
+        )
         self.InfoBar = InfoBar(root=self.ROOT, parent_widget=self.FRAME, parent=self)
 
         self.IMAGE = Label(self.FRAME, width=1000, height=845)
@@ -30,19 +32,23 @@ class ImageBrowserGUI:
         self.BUTTONFRAME = Frame(self.FRAME)
         self.BUTTONFRAME.pack(anchor="s")
 
-        self.PREVBUTTON = Button(self.BUTTONFRAME,
-                                 text="< Prev",
-                                 font=('Helvetica', 11, 'bold'),
-                                 command=self.parent.next_image)
+        self.PREVBUTTON = Button(
+            self.BUTTONFRAME,
+            text="< Prev",
+            font=("Helvetica", 11, "bold"),
+            command=self.parent.next_image,
+        )
         self.PREVBUTTON.pack(pady=15, side="left")
 
         self.IMG_COUNTER = Label(self.BUTTONFRAME, text="1/13")
         self.IMG_COUNTER.pack(expand=True, fill="x", side="left", padx=15)
 
-        self.NEXTBUTTON = Button(self.BUTTONFRAME,
-                                 text="Next >",
-                                 font=('Helvetica', 11, 'bold'),
-                                 command=self.parent.next_image)
+        self.NEXTBUTTON = Button(
+            self.BUTTONFRAME,
+            text="Next >",
+            font=("Helvetica", 11, "bold"),
+            command=self.parent.next_image,
+        )
         self.NEXTBUTTON.pack(pady=15, side="right")
 
         self.bind_key_shortcuts()
@@ -66,8 +72,8 @@ class ImageBrowserGUI:
         self.parent.change_image()
 
     def bind_key_shortcuts(self):
-        self.ROOT.bind('<Left>', self.parent.prev_image)
-        self.ROOT.bind('<Right>', self.parent.next_image)
+        self.ROOT.bind("<Left>", self.parent.prev_image)
+        self.ROOT.bind("<Right>", self.parent.next_image)
 
     def update_img_count(self, current_index: int, length: int):
         self.IMG_COUNTER.configure(text=f"{current_index}/{length}")
