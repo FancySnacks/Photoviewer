@@ -22,7 +22,10 @@ class ImageBrowserGUI:
         self.FRAME.pack(expand=True, fill="both")
 
         self.SrcTarget = SrcTargetInfo(
-            root=self.ROOT, parent_widget=self.FRAME, parent=self
+            root=self.ROOT,
+            parent_widget=self.FRAME,
+            parent=self,
+            image_browser=self.parent
         )
         self.InfoBar = InfoBar(root=self.ROOT, parent_widget=self.FRAME, parent=self)
 
