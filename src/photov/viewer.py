@@ -95,7 +95,7 @@ class MainImage:
         self.image: Image = Image.open(location)
         self._location: str = location
         self.index: int = img_index
-        self.file_size: int = os.path.getsize(self.location)
+        self.file_size: int = os.path.getsize(self.get_full_path())
 
     def get_full_path(self) -> str:
         return self._location
