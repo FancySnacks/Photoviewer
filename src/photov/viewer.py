@@ -43,32 +43,35 @@ class ImageBrowser:
 
     def change_image(self, location: str = ""):
         if location == "" or location == ".":
-            self.current_image.load_image(self.full_path(self.images[0]))
+            self.current_image.load_image(self.full_path(self.images[0]), 1)
         else:
-            self.current_image.load_image(self.full_path(location))
+            img_index: int = self.images.index(location)
+            self.current_image.load_image(self.full_path(location), img_index+1)
 
         if self.widget:
             self.widget.set_image(self.current_image)
+            self.widget.update_img_count(self.current_image.index, len(self.images))
 
     def prev_image(self, *args):
-        current_index = self.get_image_index(self.current_image.location)
-        prev_img = self.get_image_at(current_index - 1)
-        self.change_image(prev_img)
+        current_index: int = self.get_image_index(self.current_image.location)
+        prev_img_path: str = self.get_image_at(current_index - 1)
+        self.change_image(prev_img_path)
 
     def next_image(self, *args):
-        current_index = self.get_image_index(self.current_image.location)
-        next_img = self.get_image_at(current_index + 1)
-        self.change_image(next_img)
+        current_index: int = self.get_image_index(self.current_image.location)
+        next_img_path: str = self.get_image_at(current_index + 1)
+        self.change_image(next_img_path)
 
     def full_path(self, img_path: str) -> str:
-        path = pathlib.Path(self.current_dir).joinpath(img_path)
+        path: pathlib.Path = pathlib.Path(self.current_dir).joinpath(img_path)
         return str(path)
 
 
 class MainImage:
     def __init__(self, location: str = ""):
         self._location: str = location
-        self._image = None
+        self._image: Image = None
+        self.index: int = 0
 
     @property
     def get_image(self) -> ImageTk:
@@ -80,9 +83,10 @@ class MainImage:
         path = pathlib.Path(self._location).parts[-1]
         return path
 
-    def load_image(self, location: str):
-        self._image = Image.open(location)
-        self._location = location
+    def load_image(self, location: str, img_index: int):
+        self._image: Image = Image.open(location)
+        self._location: str = location
+        self.index: int = img_index
 
     def get_full_path(self) -> str:
         return self._location

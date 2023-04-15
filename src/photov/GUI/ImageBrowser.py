@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 from tkinter import *
 
 from photov.GUI.SrcTargetInfo import SrcTargetInfo
+from photov.GUI.StatusBar import StatusBar
 
 if TYPE_CHECKING:
     from photov.viewer import ImageBrowser
@@ -21,12 +22,13 @@ class ImageBrowserGUI:
         self.FRAME.pack(expand=True, fill="both")
 
         self.SrcTarget = SrcTargetInfo(root=self.ROOT, parent_widget=self.FRAME, parent=self)
+        self.StatusBar = StatusBar(root=self.ROOT, parent_widget=self.FRAME, parent=self)
 
-        self.LABEL = Label(self.FRAME)
-        self.LABEL.pack(expand=True)
+        self.IMAGE = Label(self.FRAME)
+        self.IMAGE.pack(expand=True)
 
         self.BUTTONFRAME = Frame(self.FRAME)
-        self.BUTTONFRAME.pack()
+        self.BUTTONFRAME.pack(anchor="s")
 
         self.PREVBUTTON = Button(self.BUTTONFRAME,
                                  text="< Prev",
@@ -34,8 +36,8 @@ class ImageBrowserGUI:
                                  command=self.parent.next_image)
         self.PREVBUTTON.pack(pady=15, side="left")
 
-        self.SEPARATOR = Frame(self.BUTTONFRAME)
-        self.SEPARATOR.pack(expand=True, padx=50)
+        self.IMG_COUNTER = Label(self.BUTTONFRAME, text="1/13")
+        self.IMG_COUNTER.pack(expand=True, fill="x", side="left", padx=15)
 
         self.NEXTBUTTON = Button(self.BUTTONFRAME,
                                  text="Next >",
@@ -49,7 +51,7 @@ class ImageBrowserGUI:
 
     def set_image(self, *args):
         img = args[0]
-        self.LABEL.configure(image=img.get_image)
+        self.IMAGE.configure(image=img.get_image)
         self.ROOT.title(f"{img.location} - PhotoViewer")
         self.set_img_path_info(img.get_full_path())
 
@@ -62,3 +64,6 @@ class ImageBrowserGUI:
     def bind_key_shortcuts(self):
         self.ROOT.bind('<Left>', self.parent.prev_image)
         self.ROOT.bind('<Right>', self.parent.next_image)
+
+    def update_img_count(self, current_index: int, length: int):
+        self.IMG_COUNTER.configure(text=f"{current_index}/{length}")
