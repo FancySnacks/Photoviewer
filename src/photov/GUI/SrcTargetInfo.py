@@ -43,7 +43,7 @@ class SrcTargetInfo:
         self.TARGET_ENTRY = Entry(self.TARGET_FRAME, textvariable=self.target_path, width=75)
         self.TARGET_ENTRY.grid(padx=5, row=1, column=1)
 
-        self.MOVE_BUTTON = Button(self.TARGET_FRAME, text="COPY")
+        self.MOVE_BUTTON = Button(self.TARGET_FRAME, text="COPY", command=self.copy_file)
         self.MOVE_BUTTON.grid(row=1, column=2)
 
     def set_source_dir(self, path: str):
@@ -59,3 +59,8 @@ class SrcTargetInfo:
         input_path = self.source_path.get().replace('"', '')
         self.parent.parent.current_dir = input_path
         self.parent.load_default_image()
+
+    def copy_file(self):
+        if target_dir := self.target_path.get():
+            if pathlib.Path(target_dir).exists():
+                self.parent.parent.copy_file(self.target_path.get())

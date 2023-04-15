@@ -32,7 +32,7 @@ class ImageBrowserGUI:
 
         self.PREVBUTTON = Button(self.BUTTONFRAME,
                                  text="< Prev",
-                                 font=('Helvetica', 13, 'bold'),
+                                 font=('Helvetica', 11, 'bold'),
                                  command=self.parent.next_image)
         self.PREVBUTTON.pack(pady=15, side="left")
 
@@ -41,7 +41,7 @@ class ImageBrowserGUI:
 
         self.NEXTBUTTON = Button(self.BUTTONFRAME,
                                  text="Next >",
-                                 font=('Helvetica', 13, 'bold'),
+                                 font=('Helvetica', 11, 'bold'),
                                  command=self.parent.next_image)
         self.NEXTBUTTON.pack(pady=15, side="right")
 

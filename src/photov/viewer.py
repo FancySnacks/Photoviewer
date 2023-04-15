@@ -2,6 +2,7 @@ from PIL import Image, ImageTk
 
 import os
 import pathlib
+import shutil
 
 from photov.GUI.ImageBrowser import ImageBrowserGUI
 from photov.util import is_image_file
@@ -65,6 +66,12 @@ class ImageBrowser:
     def full_path(self, img_path: str) -> str:
         path: pathlib.Path = pathlib.Path(self.current_dir).joinpath(img_path)
         return str(path)
+
+    def copy_file(self, target_path: str):
+        shutil.copy(self.current_image.get_full_path(), target_path)
+
+    def move_file(self, target_path: str):
+        shutil.move(self.current_image.get_full_path(), target_path)
 
 
 class MainImage:
