@@ -70,12 +70,13 @@ class ImageBrowser:
 class MainImage:
     def __init__(self, location: str = ""):
         self._location: str = location
-        self._image: Image = None
+        self.image: Image = None
         self.index: int = 0
+        self.file_size: int = 0
 
     @property
     def get_image(self) -> ImageTk:
-        self.img = ImageTk.PhotoImage(self._image)
+        self.img = ImageTk.PhotoImage(self.image)
         return self.img
 
     @property
@@ -84,9 +85,10 @@ class MainImage:
         return path
 
     def load_image(self, location: str, img_index: int):
-        self._image: Image = Image.open(location)
+        self.image: Image = Image.open(location)
         self._location: str = location
         self.index: int = img_index
+        self.file_size: int = os.path.getsize(self.location)
 
     def get_full_path(self) -> str:
         return self._location

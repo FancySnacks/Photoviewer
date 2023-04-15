@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 from tkinter import *
 
 from photov.GUI.SrcTargetInfo import SrcTargetInfo
-from photov.GUI.StatusBar import StatusBar
+from photov.GUI.InfoBar import InfoBar
 
 if TYPE_CHECKING:
     from photov.viewer import ImageBrowser
@@ -16,15 +16,15 @@ class ImageBrowserGUI:
 
         self.ROOT = Tk()
         self.ROOT.title("Photo Viewer")
-        self.ROOT.geometry("500x400")
+        self.ROOT.geometry("800x600")
 
         self.FRAME = Frame(self.ROOT)
         self.FRAME.pack(expand=True, fill="both")
 
         self.SrcTarget = SrcTargetInfo(root=self.ROOT, parent_widget=self.FRAME, parent=self)
-        self.StatusBar = StatusBar(root=self.ROOT, parent_widget=self.FRAME, parent=self)
+        self.InfoBar = InfoBar(root=self.ROOT, parent_widget=self.FRAME, parent=self)
 
-        self.IMAGE = Label(self.FRAME)
+        self.IMAGE = Label(self.FRAME, width=1000, height=845)
         self.IMAGE.pack(expand=True)
 
         self.BUTTONFRAME = Frame(self.FRAME)
@@ -52,8 +52,12 @@ class ImageBrowserGUI:
     def set_image(self, *args):
         img = args[0]
         self.IMAGE.configure(image=img.get_image)
+        self.update_widgets(img)
+
+    def update_widgets(self, img):
         self.ROOT.title(f"{img.location} - PhotoViewer")
         self.set_img_path_info(img.get_full_path())
+        self.update_img_size(img.image.size, img.file_size)
 
     def set_img_path_info(self, path: str):
         self.SrcTarget.set_source_dir(path)
@@ -67,3 +71,7 @@ class ImageBrowserGUI:
 
     def update_img_count(self, current_index: int, length: int):
         self.IMG_COUNTER.configure(text=f"{current_index}/{length}")
+
+    def update_img_size(self, size: tuple[int, int], filesize: int):
+        self.InfoBar.set_img_size_text(size)
+        self.InfoBar.set_img_filesize_text(filesize)
