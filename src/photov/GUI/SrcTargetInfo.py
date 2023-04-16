@@ -30,7 +30,9 @@ class SrcTargetInfo:
         self.SRC_FRAME = tkinter.Frame(self.ENTRIES_FRAME)
         self.SRC_FRAME.grid()
 
-        self.SRC_ENTRY = tkinter.Entry(self.SRC_FRAME, textvariable=self.source_path, width=75)
+        self.SRC_ENTRY = tkinter.Entry(
+            self.SRC_FRAME, textvariable=self.source_path, width=75
+        )
         self.SRC_ENTRY.grid(padx=5, row=0, column=1)
 
         self.SRC_BUTTON = tkinter.Button(

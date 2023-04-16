@@ -1,0 +1,38 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+
+  - repo: https://github.com/pytest-dev/pytest
+    rev: "7.2.0"
+    hooks:
+      - id: pytest
+        args: [--config, setup.cfg]
+
+  - repo: https://github.com/pre-commit/mirrors-flake8
+    rev: '6.0.0'
+    hooks:
+      - id: flake8
+        stages: [commit, push]
+        files: src/
+
+  - repo: https://github.com/ambv/black
+    rev: '23.3.0'
+    hooks:
+      - id: black
+        files: src/
+        language_version: python3.10
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: '1.2.0'
+    hooks:
+      - id: mypy
+        files: src/
+        args:
+        - --disable-error-code no-redef
+        - --disable-error-code index
+        - --disable-error-code import
+        - --disable-error-code assignment
