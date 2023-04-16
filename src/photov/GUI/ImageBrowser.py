@@ -25,7 +25,7 @@ class ImageBrowserGUI:
             root=self.ROOT,
             parent_widget=self.FRAME,
             parent=self,
-            image_browser=self.parent
+            image_browser=self.parent,
         )
         self.InfoBar = InfoBar(root=self.ROOT, parent_widget=self.FRAME, parent=self)
 

@@ -92,8 +92,9 @@ class SrcTargetInfo:
 
     def browse_source(self):
         try:
-            source_dir: str = tkinter.filedialog.askdirectory(initialdir=self.image_browser.current_dir,
-                                                              mustexist=True)
+            source_dir: str = tkinter.filedialog.askdirectory(
+                initialdir=self.image_browser.current_dir, mustexist=True
+            )
             if source_dir:
                 self.source_path.set(source_dir)
                 self.update_cwd(source_dir)
@@ -102,8 +103,9 @@ class SrcTargetInfo:
 
     def browse_destination(self):
         try:
-            target_dir: str = tkinter.filedialog.askdirectory(initialdir=self.image_browser.current_dir,
-                                                              mustexist=True)
+            target_dir: str = tkinter.filedialog.askdirectory(
+                initialdir=self.image_browser.current_dir, mustexist=True
+            )
             if target_dir:
                 self.target_path.set(target_dir)
         except Exception:
