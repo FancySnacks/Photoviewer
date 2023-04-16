@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 
-from tkinter import *
+import tkinter
 
 from photov.GUI.SrcTargetInfo import SrcTargetInfo
 from photov.GUI.InfoBar import InfoBar
@@ -14,11 +14,11 @@ class ImageBrowserGUI:
     def __init__(self, parent: ImageBrowser):
         self.parent = parent
 
-        self.ROOT = Tk()
+        self.ROOT = tkinter.Tk()
         self.ROOT.title("Photo Viewer")
         self.ROOT.geometry("800x600")
 
-        self.FRAME = Frame(self.ROOT)
+        self.FRAME = tkinter.Frame(self.ROOT)
         self.FRAME.pack(expand=True, fill="both")
 
         self.SrcTarget = SrcTargetInfo(
@@ -29,13 +29,13 @@ class ImageBrowserGUI:
         )
         self.InfoBar = InfoBar(root=self.ROOT, parent_widget=self.FRAME, parent=self)
 
-        self.IMAGE = Label(self.FRAME, width=1000, height=845)
+        self.IMAGE = tkinter.Label(self.FRAME, width=1000, height=845)
         self.IMAGE.pack(expand=True)
 
-        self.BUTTONFRAME = Frame(self.FRAME)
+        self.BUTTONFRAME = tkinter.Frame(self.FRAME)
         self.BUTTONFRAME.pack(anchor="s")
 
-        self.PREVBUTTON = Button(
+        self.PREVBUTTON = tkinter.Button(
             self.BUTTONFRAME,
             text="< Prev",
             font=("Helvetica", 11, "bold"),
@@ -43,10 +43,10 @@ class ImageBrowserGUI:
         )
         self.PREVBUTTON.pack(pady=15, side="left")
 
-        self.IMG_COUNTER = Label(self.BUTTONFRAME, text="1/13")
+        self.IMG_COUNTER = tkinter.Label(self.BUTTONFRAME, text="1/13")
         self.IMG_COUNTER.pack(expand=True, fill="x", side="left", padx=15)
 
-        self.NEXTBUTTON = Button(
+        self.NEXTBUTTON = tkinter.Button(
             self.BUTTONFRAME,
             text="Next >",
             font=("Helvetica", 11, "bold"),
