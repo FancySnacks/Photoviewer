@@ -1,4 +1,5 @@
 import pathlib
+from typing import Tuple
 
 from photov.const import IMAGE_EXTENSIONS
 
@@ -12,12 +13,12 @@ def is_image_file(path: str) -> bool:
         return False
 
 
-def bytes_to_nearest_unit(bytes: int) -> (int, str):
+def bytes_to_nearest_unit(b: int) -> Tuple[float, str]:
     import math
 
     units = ["B", "KB", "MB", "GB", "TB"]
-    div = int(math.floor(math.log(bytes, 1024)))
+    div = int(math.floor(math.log(b, 1024)))
     p = math.pow(1024, div)
-    r = round(bytes / p, 2)
+    r = round(b / p, 2)
     result = (r, units[div])
     return result

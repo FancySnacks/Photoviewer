@@ -74,15 +74,15 @@ class SrcTargetInfo:
         self.update_cwd(path)
 
     def update_cwd(self, path: str):
-        path = pathlib.Path(path)
+        cwd_path: pathlib.Path = pathlib.Path(path)
 
-        if path == self.image_browser.current_dir:
+        if cwd_path == self.image_browser.current_dir:
             return
 
-        if path.is_file():
-            path = str(path.parent).replace('"', "")
+        if cwd_path.is_file():
+            cwd_path: str = str(cwd_path.parent).replace('"', "")
 
-        self.image_browser.current_dir = path
+        self.image_browser.current_dir = cwd_path
         self.parent.load_default_image()
 
     def copy_file(self):

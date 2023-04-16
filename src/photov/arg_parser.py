@@ -7,8 +7,8 @@ class ArgParser(ArgumentParser):
         super().__init__()
         self.setup()
 
-        self.args = self.parse_args(args)
-        self.args: dict = vars(self.args)
+        self.parsed_args = self.parse_args(args)
+        self.parsed_args: dict = vars(self.parsed_args)
 
     def setup(self):
         self.add_argument(
@@ -24,4 +24,4 @@ class ArgParser(ArgumentParser):
         )
 
     def get_arg(self, key: str) -> Any:
-        return self.args[key]
+        return self.parsed_args[key]

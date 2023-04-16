@@ -4,13 +4,15 @@ import os
 import pathlib
 import shutil
 
+from typing import Optional
+
 from photov.GUI.ImageBrowser import ImageBrowserGUI
 from photov.util import is_image_file
 
 
 class ImageBrowser:
-    def __init__(self, show_widget=False, path: str = None):
-        self.current_dir = path or pathlib.Path().cwd()
+    def __init__(self, show_widget: bool = False, path: Optional[str] = ""):
+        self.current_dir: str = path or str(pathlib.Path().cwd())
         self._images: list[str] = self.get_images_in_dir()
         self.current_image: MainImage = MainImage()
 

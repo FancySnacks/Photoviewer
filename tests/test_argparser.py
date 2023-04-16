@@ -11,7 +11,7 @@ def argparser() -> ArgParser:
 def test_parses_args():
     argv = ["-p."]
     argparser = ArgParser(argv)
-    assert isinstance(argparser.args, dict)
+    assert isinstance(argparser.parsed_args, dict)
 
 
 def test_parse_working_directory():
