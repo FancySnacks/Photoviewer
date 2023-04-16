@@ -1,33 +1,36 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v4.4.0
     hooks:
       - id: trailing-whitespace
-      - id: end-of-file-fixer
       - id: check-yaml
+      - id: double-quote-string-fixer
+      - id: requirements-txt-fixer
 
-  - repo: https://github.com/pytest-dev/pytest
-    rev: "7.2.0"
+  - repo: local
     hooks:
-      - id: pytest
-        args: [--config, setup.cfg]
+      - id: pytest-check
+        name: pytest-check
+        entry: pytest
+        language: system
+        pass_filenames: false
+        always_run: true
 
-  - repo: https://github.com/pre-commit/mirrors-flake8
-    rev: '6.0.0'
+  - repo: https://github.com/PyCQA/flake8
+    rev: 6.0.0
     hooks:
       - id: flake8
         stages: [commit, push]
         files: src/
 
-  - repo: https://github.com/ambv/black
-    rev: '23.3.0'
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
     hooks:
       - id: black
         files: src/
-        language_version: python3.10
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: '1.2.0'
+    rev: v1.2.0
     hooks:
       - id: mypy
         files: src/
