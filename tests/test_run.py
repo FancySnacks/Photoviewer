@@ -15,5 +15,5 @@ def run_module(args: list[str] = None):
 
 
 def test_module_runs_via_console():
-    exit_code = run_module(["-g"])
+    exit_code = run_module(['-g'])
     assert exit_code == 0

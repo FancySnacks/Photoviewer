@@ -24,7 +24,7 @@ class MockImageBrowser:
             try:
                 return self.images[-1]
             except IndexError:
-                return ""
+                return ''
 
     def get_image_index(self, img_path: str):
         if img_path not in self.images:

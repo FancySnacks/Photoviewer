@@ -4,8 +4,6 @@ repos:
     hooks:
       - id: trailing-whitespace
       - id: check-yaml
-      - id: double-quote-string-fixer
-      - id: requirements-txt-fixer
 
   - repo: local
     hooks:
@@ -28,14 +26,18 @@ repos:
     hooks:
       - id: black
         files: src/
+        args: ["--quiet"]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.2.0
     hooks:
       - id: mypy
         files: src/
-        args:
-        - --disable-error-code no-redef
-        - --disable-error-code index
-        - --disable-error-code import
-        - --disable-error-code assignment
+        args: ["--disable-error-code",
+               "no-redef",
+               "--disable-error-code",
+               "index",
+               "--disable-error-code",
+               "import",
+               "--disable-error-code",
+               "assignment"]

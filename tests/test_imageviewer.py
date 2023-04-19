@@ -6,7 +6,7 @@ from .mock_imagebrowser import MockImageBrowser
 
 @pytest.fixture
 def mock_directory() -> list[str]:
-    return ["image.jpg", "photo.png", "test.jpeg", "anim.gif", "article.txt"]
+    return ['image.jpg', 'photo.png', 'test.jpeg', 'anim.gif', 'article.txt']
 
 
 @pytest.fixture
@@ -24,7 +24,7 @@ def test_load_only_images_from_directory(mock_directory):
 
 def test_get_image_at_target_index(mock_browser):
     img = mock_browser.get_image_at(0)
-    assert img != ""
+    assert img != ''
 
 
 def test_get_image_index(mock_browser):
