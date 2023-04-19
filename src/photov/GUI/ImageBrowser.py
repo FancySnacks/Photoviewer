@@ -16,6 +16,8 @@ class ImageBrowserGUI:
 
         customtkinter.set_appearance_mode("dark")
 
+        # ==== Widget Components ==== #
+
         self.ROOT = customtkinter.CTk()
         self.ROOT.title("Photo Viewer")
         self.ROOT.geometry("800x600")
@@ -31,7 +33,7 @@ class ImageBrowserGUI:
         )
         self.InfoBar = InfoBar(root=self.ROOT, parent_widget=self.FRAME, parent=self)
 
-        self.IMAGE = customtkinter.CTkLabel(self.FRAME, width=1000, height=845)
+        self.IMAGE = customtkinter.CTkLabel(self.FRAME, width=1000, height=845, text="")
         self.IMAGE.pack(expand=True)
 
         self.BUTTONFRAME = customtkinter.CTkFrame(self.FRAME)
@@ -42,6 +44,7 @@ class ImageBrowserGUI:
             text="< Prev",
             font=("Helvetica", 11, "bold"),
             command=self.parent.next_image,
+            width=5,
         )
         self.PREVBUTTON.pack(pady=15, side="left")
 
@@ -53,6 +56,7 @@ class ImageBrowserGUI:
             text="Next >",
             font=("Helvetica", 11, "bold"),
             command=self.parent.next_image,
+            width=5,
         )
         self.NEXTBUTTON.pack(pady=15, side="right")
 
