@@ -1,5 +1,6 @@
 import pathlib
-from typing import Tuple
+
+from typing import Tuple, Sequence
 
 from photov.const import IMAGE_EXTENSIONS
 
@@ -11,6 +12,13 @@ def is_image_file(path: str) -> bool:
         return True
     else:
         return False
+
+
+def get_possible_img_extensions() -> Sequence[tuple[str, str]]:
+    extensions = [
+        (f.upper().replace(".", "") + " Files", "*" + f) for f in IMAGE_EXTENSIONS
+    ]
+    return extensions
 
 
 def bytes_to_nearest_unit(b: int) -> Tuple[float, str]:

@@ -4,15 +4,13 @@ import os
 import pathlib
 import shutil
 
-from typing import Optional
-
 from photov.GUI.ImageBrowser import ImageBrowserGUI
 from photov.util import is_image_file
 
 
 class ImageBrowser:
-    def __init__(self, show_widget: bool = False, path: Optional[str] = ""):
-        self.current_dir: str = path or str(pathlib.Path().cwd())
+    def __init__(self, path: str, show_widget: bool = False):
+        self.current_dir: str = path
         self._images: list[str] = self.get_images_in_dir()
         self.current_image: MainImage = MainImage()
 
@@ -32,7 +30,6 @@ class ImageBrowser:
         return image_files
 
     def get_image_at(self, index: int) -> str:
-        print(index)
         try:
             return self.images[index]
         except IndexError:
@@ -44,30 +41,42 @@ class ImageBrowser:
 
         return self.images.index(img_path)
 
-    def change_image(self, location: str = ""):
+    def change_image(self, location: pathlib.Path = ""):
+        self._file_pointer(location)
+
+        if pathlib.Path(location).is_dir():
+            self.current_image.load_image(self.full_path(self.images[0]), 1)
+
         if location == "" or location == ".":
             self.current_image.load_image(self.full_path(self.images[0]), 1)
-        else:
-            img_index: int = self.images.index(location)
-            self.current_image.load_image(self.full_path(location), img_index + 1)
 
         if self.widget:
             self.widget.set_image(self.current_image)
             self.widget.update_img_count(self.current_image.index, len(self.images))
 
+    def _file_pointer(self, path: pathlib.Path):
+        if pathlib.Path(path).is_file():
+            img_index: int = self.images.index(path.name)
+            self.current_image.load_image(path, img_index + 1)
+        elif self.full_path(path).is_file():
+            img_index: int = self.images.index(self.full_path(path).name)
+            self.current_image.load_image(self.full_path(path), img_index + 1)
+
     def prev_image(self, *args):
         current_index: int = self.get_image_index(self.current_image.location)
-        prev_img_path: str = self.get_image_at(current_index - 1)
+        prev_img_path = self.get_image_at(current_index - 1)
+        prev_img_path = pathlib.Path(prev_img_path)
         self.change_image(prev_img_path)
 
     def next_image(self, *args):
         current_index: int = self.get_image_index(self.current_image.location)
-        next_img_path: str = self.get_image_at(current_index + 1)
+        next_img_path = self.get_image_at(current_index + 1)
+        next_img_path = pathlib.Path(next_img_path)
         self.change_image(next_img_path)
 
-    def full_path(self, img_path: str) -> str:
+    def full_path(self, img_path) -> pathlib.Path:
         path: pathlib.Path = pathlib.Path(self.current_dir).joinpath(img_path)
-        return str(path)
+        return path
 
     def copy_file(self, target_path: str):
         shutil.copy(self.current_image.get_full_path(), target_path)
@@ -90,12 +99,12 @@ class MainImage:
 
     @property
     def location(self) -> str:
-        path = pathlib.Path(self._location).parts[-1]
+        path = pathlib.Path(self._location).name
         return path
 
-    def load_image(self, location: str, img_index: int):
+    def load_image(self, location: pathlib.Path, img_index: int):
         self.image: Image = Image.open(location)
-        self._location: str = location
+        self._location: str = str(location)
         self.index: int = img_index
         self.file_size: int = os.path.getsize(self.get_full_path())
 

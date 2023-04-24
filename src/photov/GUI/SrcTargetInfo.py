@@ -3,6 +3,8 @@ import customtkinter
 import pathlib
 import tkinter.filedialog
 
+from photov.util import get_possible_img_extensions
+
 
 class SrcTargetInfo:
     def __init__(self, root: customtkinter.CTk, parent_widget, parent, image_browser):
@@ -94,11 +96,10 @@ class SrcTargetInfo:
         if cwd_path == self.image_browser.current_dir:
             return
 
-        if cwd_path.is_file():
-            cwd_path: str = str(cwd_path.parent).replace('"', "")
-
-        self.image_browser.current_dir = cwd_path
-        self.parent.load_default_image()
+        self.image_browser.current_dir = (
+            cwd_path.parent if cwd_path.is_file() else cwd_path
+        )
+        self.image_browser.change_image(cwd_path)
 
     def copy_file(self):
         if target_dir := self.target_path.get():
@@ -107,9 +108,11 @@ class SrcTargetInfo:
 
     def browse_source(self):
         try:
-            source_dir: str = tkinter.filedialog.askdirectory(
-                initialdir=self.image_browser.current_dir, mustexist=True
+            source_dir = tkinter.filedialog.askopenfile(
+                initialdir=self.image_browser.current_dir,
+                filetypes=get_possible_img_extensions(),
             )
+            source_dir = source_dir.name
             if source_dir:
                 self.source_path.set(source_dir)
                 self.update_cwd(source_dir)
