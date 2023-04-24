@@ -1,6 +1,8 @@
 from argparse import ArgumentParser
 from typing import Optional, Sequence, Any
 
+from photov.const import PATH
+
 
 class ArgParser(ArgumentParser):
     def __init__(self, args: Optional[Sequence[str]] | None):
@@ -15,7 +17,7 @@ class ArgParser(ArgumentParser):
             "-p",
             "--path",
             type=str,
-            default=None,
+            default=PATH,
             help="Specify source directory to operate on",
         )
 
