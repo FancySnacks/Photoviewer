@@ -10,7 +10,9 @@ from photov.util import is_image_file
 
 class ImageBrowser:
     def __init__(self, path: str, show_widget: bool = False):
-        self.current_dir: str = path
+        self._current_dir: str = (
+            str(pathlib.Path(path).parent) if pathlib.Path(path).is_file() else path
+        )
         self._images: list[str] = self.get_images_in_dir()
         self.current_image: MainImage = MainImage()
 
@@ -18,6 +20,17 @@ class ImageBrowser:
             self.widget = ImageBrowserGUI(self)
             self.widget.set_img_path_info(self.current_dir)
             self.widget.ROOT.mainloop()
+
+    @property
+    def current_dir(self) -> str:
+        return self._current_dir
+
+    @current_dir.setter
+    def current_dir(self, value: str):
+        if pathlib.Path(value).is_file():
+            self._current_dir = str(pathlib.Path(value).parent)
+        else:
+            self._current_dir = value
 
     @property
     def images(self) -> list[str]:
