@@ -22,7 +22,12 @@ class ArgParser(ArgumentParser):
         )
 
         self.add_argument(
-            "-g", "--nogui", action="store_true", help="Run script without GUI"
+            "-g",
+            "--gui",
+            action="store_const",
+            const=True,
+            default=False,
+            help="Run script with GUI",
         )
 
     def get_arg(self, key: str) -> Any:
