@@ -21,14 +21,8 @@ class SrcTargetInfo:
         self.FRAME = customtkinter.CTkFrame(self.parent_widget)
         self.FRAME.pack(pady=10)
 
-        self.LABEL_FRAME = customtkinter.CTkFrame(self.FRAME)
-        self.LABEL_FRAME.grid(row=0, column=0)
-
         self.ENTRIES_FRAME = customtkinter.CTkFrame(self.FRAME)
         self.ENTRIES_FRAME.grid(row=0, column=1)
-
-        self.SRC_LABEL = customtkinter.CTkLabel(self.LABEL_FRAME, text="SRC")
-        self.SRC_LABEL.grid(row=0, column=0, sticky="e")
 
         self.SRC_FRAME = customtkinter.CTkFrame(self.ENTRIES_FRAME)
         self.SRC_FRAME.grid()
@@ -54,11 +48,11 @@ class SrcTargetInfo:
         )
         self.BROWSE_SRC_BUTTON.grid(row=0, column=3)
 
-        self.TARGET_FRAME = customtkinter.CTkFrame(self.ENTRIES_FRAME)
-        self.TARGET_FRAME.grid(pady=5)
+        self.ARROW_LABEL = customtkinter.CTkLabel(self.ENTRIES_FRAME, text=">>>")
+        self.ARROW_LABEL.grid(row=0, column=1, padx=15)
 
-        self.TARGET_LABEL = customtkinter.CTkLabel(self.LABEL_FRAME, text="TARGET")
-        self.TARGET_LABEL.grid(row=1, column=0)
+        self.TARGET_FRAME = customtkinter.CTkFrame(self.ENTRIES_FRAME)
+        self.TARGET_FRAME.grid(pady=5, row=0, column=2)
 
         self.TARGET_ENTRY = customtkinter.CTkEntry(
             self.TARGET_FRAME, textvariable=self.target_path, width=450
