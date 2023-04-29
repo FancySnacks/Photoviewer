@@ -1,9 +1,11 @@
 import pathlib
+from os import getcwd
 
 from enum import StrEnum
 
 
-PATH = pathlib.Path(__file__).parent
+PATH = pathlib.Path(getcwd())
+ABSPATH = pathlib.Path(__file__).parent
 
 PATH_TYPE_FILE = "FILE"
 PATH_TYPE_DIR = "DIR"

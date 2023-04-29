@@ -1,10 +1,10 @@
 import subprocess
 
-from photov.const import PATH
+from photov.const import ABSPATH
 
 
 def run_module(args: list[str] = None):
-    path = f'python {PATH}'
+    path = f'python {ABSPATH}'
 
     if args:
         path = path + ' ' + ' '.join(args)
