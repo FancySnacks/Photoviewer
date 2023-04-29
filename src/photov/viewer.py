@@ -70,7 +70,7 @@ class ImageBrowser:
     def _file_pointer(self, path: pathlib.Path):
         if pathlib.Path(path).is_file():
             img_index: int = self.images.index(path.name)
-            self.current_image.load_image(path, img_index + 1)
+            self.current_image.load_image(self.full_path(path), img_index + 1)
         elif self.full_path(path).is_file():
             img_index: int = self.images.index(self.full_path(path).name)
             self.current_image.load_image(self.full_path(path), img_index + 1)
