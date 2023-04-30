@@ -9,16 +9,18 @@ from photov.util import is_image_file
 
 
 class ImageBrowser:
-    def __init__(self, path: str, show_widget: bool = False):
+    def __init__(self, path: str, show_widget: bool = False, target_dir: str = ""):
         self._current_dir: str = (
             str(pathlib.Path(path).parent) if pathlib.Path(path).is_file() else path
         )
         self._images: list[str] = self.get_images_in_dir()
         self.current_image: MainImage = MainImage()
+        self.target_dir = target_dir
 
         if show_widget is True:
             self.widget = ImageBrowserGUI(self)
             self.widget.set_img_path_info(self.current_dir)
+            self.widget.SrcTarget.target_path.set(self.target_dir)
             self.widget.ROOT.mainloop()
 
     @property

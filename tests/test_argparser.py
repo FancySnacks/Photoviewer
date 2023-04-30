@@ -14,10 +14,13 @@ def test_parses_args():
     assert isinstance(argparser.parsed_args, dict)
 
 
-def test_parse_working_directory():
-    target_dir = './resources/img'
-    parser = ArgParser([f'-p{target_dir}'])
-    assert parser.get_arg('path') == target_dir
+@pytest.mark.parametrize("args, key, expected", [
+    (['-p./resources/img'], 'path', './resources/img'),
+    (['-t./test/img'], 'target', './test/img'),
+])
+def test_arg_parsing(args, key, expected):
+    parser = ArgParser(args)
+    assert parser.get_arg(key) == expected
 
 
 def test_raises_exception_when_invalid_args():

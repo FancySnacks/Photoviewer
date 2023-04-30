@@ -22,6 +22,14 @@ class ArgParser(ArgumentParser):
         )
 
         self.add_argument(
+            "-t",
+            "--target",
+            type=str,
+            default="",
+            help="Specify target directory to operate on",
+        )
+
+        self.add_argument(
             "-g",
             "--gui",
             action="store_const",
