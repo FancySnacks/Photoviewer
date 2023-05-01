@@ -36,7 +36,7 @@ class ImageBrowserGUI:
         self.IMAGE = customtkinter.CTkLabel(self.FRAME, width=1000, height=845, text="")
         self.IMAGE.pack(expand=True)
 
-        self.BUTTONFRAME = customtkinter.CTkFrame(self.FRAME)
+        self.BUTTONFRAME = customtkinter.CTkFrame(self.FRAME, fg_color="transparent")
         self.BUTTONFRAME.pack(anchor="s")
 
         self.PREVBUTTON = customtkinter.CTkButton(

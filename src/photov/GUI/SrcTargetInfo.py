@@ -1,9 +1,10 @@
 import customtkinter
 
 import pathlib
+import os
 import tkinter.filedialog
 
-from photov.util import get_possible_img_extensions
+from photov.util import get_possible_img_extensions, is_image_file
 
 
 class SrcTargetInfo:
@@ -42,7 +43,7 @@ class SrcTargetInfo:
 
         self.BROWSE_SRC_BUTTON = customtkinter.CTkButton(
             self.SRC_FRAME,
-            text="Browse..",
+            text="Browse",
             command=self.browse_source,
             width=5,
         )
@@ -69,11 +70,16 @@ class SrcTargetInfo:
 
         self.BROWSE_TARGET_BUTTON = customtkinter.CTkButton(
             self.TARGET_FRAME,
-            text="Browse..",
+            text="Browse",
             command=self.browse_destination,
             width=5,
         )
         self.BROWSE_TARGET_BUTTON.grid(row=1, column=3)
+
+        self.TARGET_DIR_IMG_COUNT = customtkinter.CTkLabel(
+            self.TARGET_FRAME, text="", bg_color="transparent"
+        )
+        self.TARGET_DIR_IMG_COUNT.grid(row=1, column=4, padx=5)
 
     def set_source_dir(self, path: str):
         self.SRC_ENTRY.delete(0, customtkinter.END)
@@ -119,5 +125,11 @@ class SrcTargetInfo:
             if target_dir:
                 self.target_path.set(target_dir)
                 self.image_browser.target_dir = target_dir
+                self._update_target_dir_img_count()
         except Exception:
             return
+
+    def _update_target_dir_img_count(self):
+        files = os.listdir(self.target_path.get())
+        imgs = list(filter(is_image_file, files))
+        self.TARGET_DIR_IMG_COUNT.configure(text=f"{len(imgs)} img(s)")
