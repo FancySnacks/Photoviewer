@@ -93,11 +93,17 @@ class ImageBrowser:
         path: pathlib.Path = pathlib.Path(self.current_dir).joinpath(img_path)
         return path
 
-    def copy_file(self, target_path: str):
-        shutil.copy(self.current_image.get_full_path(), target_path)
+    def copy_file(self, *args):
+        if self.target_dir:
+            if pathlib.Path(self.target_dir).exists():
+                shutil.copy(self.current_image.get_full_path(), self.target_dir)
+                print(f"Copied 1 image to {self.target_dir}")
 
-    def move_file(self, target_path: str):
-        shutil.move(self.current_image.get_full_path(), target_path)
+    def move_file(self, *args):
+        if self.target_dir:
+            if pathlib.Path(self.target_dir).exists():
+                shutil.move(self.current_image.get_full_path(), self.target_dir)
+                print(f"Moved 1 image to {self.target_dir}")
 
 
 class MainImage:

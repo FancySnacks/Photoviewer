@@ -96,9 +96,7 @@ class SrcTargetInfo:
         self.image_browser.change_image(cwd_path)
 
     def copy_file(self):
-        if target_dir := self.target_path.get():
-            if pathlib.Path(target_dir).exists():
-                self.image_browser.copy_file(self.target_path.get())
+        self.image_browser.copy_file()
 
     def browse_source(self):
         try:
@@ -120,5 +118,6 @@ class SrcTargetInfo:
             )
             if target_dir:
                 self.target_path.set(target_dir)
+                self.image_browser.target_dir = target_dir
         except Exception:
             return
