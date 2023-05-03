@@ -1,32 +1,47 @@
-from argparse import ArgumentParser, Action, RawTextHelpFormatter
+from __future__ import annotations
+
+import shutil
+
+from argparse import ArgumentParser, RawTextHelpFormatter
 from typing import Optional, Sequence, Any
+from abc import ABC, abstractmethod
 
 from photov.const import PATH
+from photov.util import get_images_in_dir
 
 
 class ArgParser:
-    def __init__(self, args: Optional[Sequence[str]] | None):
+    def __init__(self, args: Optional[Sequence[str]] | None, subparsers: list = None):
         self._parser = ArgumentParser(formatter_class=RawTextHelpFormatter)
+        self._subparsers: list[Subparser] = []
 
         self.setup()
 
         self.subparsers = self._parser.add_subparsers(
-            description="Subparser Group", help="Image file selection"
+            description="Subparser Group", help=""
         )
 
-        self.MoveCopyParser = self.subparsers.add_parser(
-            name="SelectFiles",
-            help="-d / --date Select files by date\n"
-            "-r / --regex Select files by regex pattern\n",
-        )
-        self.MoveCopyParser.add_argument("-d", "--date", help="Select files by date")
-
-        self.MoveCopyParser.add_argument(
-            "-r", "--regex", help="Select files by regex pattern"
-        )
+        for subparser in subparsers:
+            self.add_subparser(subparser)
 
         self.parsed_args = self._parser.parse_args(args)
         self.parsed_args: dict = vars(self.parsed_args)
+
+        if self.get_arg("copy"):
+            path = self.get_arg("path")
+            target = self.get_arg("target")
+            img_files = get_images_in_dir(path)
+
+            for im in img_files:
+                shutil.copy(path + "\\" + im, target)
+
+        if self.get_arg("move"):
+            path = self.get_arg("path")
+            target = self.get_arg("target")
+            img_files = get_images_in_dir(path)
+
+            for im in img_files:
+                shutil.move(path + "\\" + im, target)
 
     def setup(self):
         self._parser.add_argument(
@@ -54,31 +69,55 @@ class ArgParser:
             help="Run script with GUI",
         )
 
-        self._parser.add_argument(
-            "-c",
-            "--copy",
-            action=Copy,
-            nargs=0,
-            help="Copy image files to previously specified target directory",
-        )
-
-        self._parser.add_argument(
-            "-m",
-            "--move",
-            action=Move,
-            nargs=0,
-            help="Move image files to previously specified target directory",
-        )
-
     def get_arg(self, key: str) -> Any:
         return self.parsed_args[key]
 
+    def add_subparser(self, subparser):
+        sub: Subparser = subparser(parent=self)
+        new_parser = self.subparsers.add_parser(name=sub.name, help=sub.help)
+        subparser.setup(self, new_parser)
+        self._subparsers.append(sub)
 
-class Copy(Action):
-    def __call__(self, parser, namespace, values, option_string=None):
-        print("copy files")
+
+class Subparser(ABC):
+    def __init__(self, parent: ArgParser):
+        self.parent: ArgParser = parent
+
+        self.name: str = ""
+        self.help: str = ""
+
+    @abstractmethod
+    def setup(self, parser_instance):
+        pass
 
 
-class Move(Action):
-    def __call__(self, parser, namespace, values, option_string=None):
-        print("Move files")
+class MoveCopyParser(Subparser):
+    def __init__(self, parent: ArgParser):
+        super().__init__(parent)
+        self.parent: ArgParser = parent
+
+        self.name: str = "Select"
+        self.help: str = (
+            "-d / --date Select files by date\n"
+            "-r / --regex Select files by regex pattern\n"
+        )
+
+    def setup(self, parser_instance):
+        parser_instance.add_argument(
+            "-d",
+            "--date",
+            help="Select files by date",
+        )
+
+        parser_instance.add_argument(
+            "-r", "--regex", help="Select files by regex pattern"
+        )
+
+        parser_instance.add_argument(
+            "-c",
+            "--copy",
+            action="store_const",
+            const=True,
+            default=False,
+            help="Copy files to target dir",
+        )

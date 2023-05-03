@@ -1,11 +1,11 @@
 from typing import Sequence, Optional
 
-from photov.arg_parser import ArgParser
+from photov.arg_parser import ArgParser, MoveCopyParser
 from photov.viewer import ImageBrowser
 
 
 def main(argv: Optional[Sequence[str]] | None = None):
-    parser = ArgParser(argv)
+    parser = ArgParser(argv, subparsers=[MoveCopyParser])
 
     work_dir: str = parser.get_arg("path")
     target_dir: str = parser.get_arg("target")

@@ -1,4 +1,5 @@
 import pathlib
+import os
 
 from typing import Tuple, Sequence
 
@@ -30,3 +31,9 @@ def bytes_to_nearest_unit(b: int) -> Tuple[float, str]:
     r = round(b / p, 2)
     result = (r, units[div])
     return result
+
+
+def get_images_in_dir(dir: str) -> list[str]:
+    files: list[str] = os.listdir(dir)
+    image_files: list[str] = list(filter(is_image_file, files))
+    return image_files

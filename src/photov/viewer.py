@@ -5,7 +5,7 @@ import pathlib
 import shutil
 
 from photov.GUI.ImageBrowser import ImageBrowserGUI
-from photov.util import is_image_file
+from photov.util import get_images_in_dir
 
 
 class ImageBrowser:
@@ -13,7 +13,7 @@ class ImageBrowser:
         self._current_dir: str = (
             str(pathlib.Path(path).parent) if pathlib.Path(path).is_file() else path
         )
-        self._images: list[str] = self.get_images_in_dir()
+        self._images: list[str] = get_images_in_dir(self.current_dir)
         self.current_image: MainImage = MainImage()
         self.target_dir = target_dir
 
@@ -36,13 +36,8 @@ class ImageBrowser:
 
     @property
     def images(self) -> list[str]:
-        self._images = self.get_images_in_dir()
+        self._images = get_images_in_dir(self.current_dir)
         return self._images
-
-    def get_images_in_dir(self) -> list[str]:
-        files: list[str] = os.listdir(self.current_dir)
-        image_files: list[str] = list(filter(is_image_file, files))
-        return image_files
 
     def get_image_at(self, index: int) -> str:
         try:
