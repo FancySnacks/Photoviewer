@@ -106,15 +106,26 @@ class ImageBrowser:
         if not self.target_dir:
             return
 
-        if self._is_img_in_target_dir():
+        if self._is_img_in_target_dir(self.current_image.location, self.target_dir):
             img_to_delete = pathlib.Path.joinpath(pathlib.Path(self.target_dir),
                                                   pathlib.Path(self.current_image.location))
             print(img_to_delete)
             self.next_image()
             os.remove(img_to_delete)
 
-    def _is_img_in_target_dir(self) -> bool:
-        return self.current_image.location in get_images_in_dir(self.target_dir)
+    def delete_files(self, img_files: list = None, target_dir: str = None):
+        if not target_dir:
+            return
+
+        for img in img_files:
+            if self._is_img_in_target_dir(img, target_dir):
+                img_to_delete = pathlib.Path.joinpath(pathlib.Path(target_dir),
+                                                      pathlib.Path(img))
+                print(img_to_delete)
+                os.remove(img_to_delete)
+
+    def _is_img_in_target_dir(self, img_path, dir_path) -> bool:
+        return img_path in get_images_in_dir(dir_path)
 
 
 class MainImage:

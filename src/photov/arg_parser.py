@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import shutil
+import pathlib
+import os
 
-from argparse import ArgumentParser, RawTextHelpFormatter
+from argparse import ArgumentParser, RawTextHelpFormatter, Action
 from typing import Optional, Sequence, Any
 from abc import ABC, abstractmethod
 
@@ -118,6 +120,15 @@ class MoveCopyParser(Subparser):
             help="Move files to target dir",
         )
 
+        parser_instance.add_argument(
+            "-x",
+            "--delete",
+            action="store_const",
+            const=True,
+            default=False,
+            help="Move files to target dir",
+        )
+
     def parse(self, args):
         if args.get("copy"):
             path = args.get("path")
@@ -134,3 +145,11 @@ class MoveCopyParser(Subparser):
 
             for im in img_files:
                 shutil.move(path + "\\" + im, target)
+
+        if args.get("delete"):
+            path = args.get("path")
+            img_files = get_images_in_dir(path)
+
+            for img in img_files:
+                img_to_del = pathlib.Path.joinpath(pathlib.Path(path), pathlib.Path(img))
+                os.remove(img_to_del)
