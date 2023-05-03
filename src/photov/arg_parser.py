@@ -27,21 +27,8 @@ class ArgParser:
         self.parsed_args = self._parser.parse_args(args)
         self.parsed_args: dict = vars(self.parsed_args)
 
-        if self.get_arg("copy"):
-            path = self.get_arg("path")
-            target = self.get_arg("target")
-            img_files = get_images_in_dir(path)
-
-            for im in img_files:
-                shutil.copy(path + "\\" + im, target)
-
-        if self.get_arg("move"):
-            path = self.get_arg("path")
-            target = self.get_arg("target")
-            img_files = get_images_in_dir(path)
-
-            for im in img_files:
-                shutil.move(path + "\\" + im, target)
+        for subparser in self._subparsers:
+            subparser.parse(self.parsed_args)
 
     def setup(self):
         self._parser.add_argument(
@@ -121,3 +108,29 @@ class MoveCopyParser(Subparser):
             default=False,
             help="Copy files to target dir",
         )
+
+        parser_instance.add_argument(
+            "-m",
+            "--move",
+            action="store_const",
+            const=True,
+            default=False,
+            help="Move files to target dir",
+        )
+
+    def parse(self, args):
+        if args.get("copy"):
+            path = args.get("path")
+            target = args.get("target")
+            img_files = get_images_in_dir(path)
+
+            for im in img_files:
+                shutil.copy(path + "\\" + im, target)
+
+        if args.get("move"):
+            path = args.get("path")
+            target = args.get("target")
+            img_files = args.get(path)
+
+            for im in img_files:
+                shutil.move(path + "\\" + im, target)
