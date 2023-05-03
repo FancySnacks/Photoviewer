@@ -85,6 +85,7 @@ class ImageBrowserGUI:
         self.ROOT.bind("<Right>", self.parent.next_image)
         self.ROOT.bind("<Control-n>", self.parent.copy_file)
         self.ROOT.bind("<Control-m>", self.parent.move_file)
+        self.ROOT.bind("<Delete>", self.parent.delete_file)
 
     def update_img_count(self, current_index: int, length: int):
         self.IMG_COUNTER.configure(text=f"{current_index}/{length}")

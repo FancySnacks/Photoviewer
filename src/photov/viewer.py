@@ -102,6 +102,20 @@ class ImageBrowser:
                 self.widget.SrcTarget._update_target_dir_img_count()
                 print(f"Moved 1 image to {self.target_dir}")
 
+    def delete_file(self, *args):
+        if not self.target_dir:
+            return
+
+        if self._is_img_in_target_dir():
+            img_to_delete = pathlib.Path.joinpath(pathlib.Path(self.target_dir),
+                                                  pathlib.Path(self.current_image.location))
+            print(img_to_delete)
+            self.next_image()
+            os.remove(img_to_delete)
+
+    def _is_img_in_target_dir(self) -> bool:
+        return self.current_image.location in get_images_in_dir(self.target_dir)
+
 
 class MainImage:
     def __init__(self, location: str = ""):
